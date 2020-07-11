@@ -27,10 +27,6 @@
 (defun init-dbg ()
   (setf *dbg* nil))
 
-(defun debug-push (obj)
-  (push obj cl-debug-print:*dbg*)
-  obj)
-
 (defun debug-push-reader (stream char1 char2)
   (declare (ignore char1 char2))
   (let ((read-data (read stream t nil t)))
@@ -38,5 +34,4 @@
 
 (defsyntax debug-print-syntax
   (:merge :standard)
-  (:dispatch-macro-char #\# #\> #'debug-print-reader)
-  (:dispatch-macro-char #\# #\! #'debug-push-reader))
+  (:dispatch-macro-char #\# #\> #'debug-print-reader))
