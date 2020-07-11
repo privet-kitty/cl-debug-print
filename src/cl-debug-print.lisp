@@ -16,10 +16,11 @@
   (format *error-output* "~A => ~A~%" pre-exp exp)
   exp)
 
-(defun debug-print-reader (stream char1 char2)
-  (declare (ignore char1 char2))
+(defun debug-print-reader (stream char number)
+  (declare (ignore char))
   (let ((read-data (read stream t nil t)))
-    `(debug-print (quote ,read-data) ,read-data)))
+    `(let ((*print-base* ,(or number 10)))
+       (debug-print (quote ,read-data) ,read-data))))
 
 (defvar *dbg* nil)
 
